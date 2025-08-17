@@ -31,3 +31,12 @@
 根据 [Jasper-1024/mosdns_docker](https://github.com/Jasper-1024/mosdns_docker/tree/master/mosdns_v5)  进行二次修改，在此基础上增加GFW域名远程解析规则，修改并发请求DNS连接数
 
 教程及DNS处理队列详解：[自用MosDNS规则分享](https://deeprouter.org/article/mosdns-config-with-no-leak)
+
+### 更新日志（性能相关）
+
+- 2025-08-17
+  - 移除多处 `query_summary` 执行，减少每次查询的指令开销。
+  - `query_cn` 增加 `prefer_ipv4`，提升双栈网络下首包速度稳定性。
+  - 开启 `ecs_cn` 的 `send: true`，提升国内域名 CDN 选路精准度。
+  - 为 Cloudflare DoH 启用 `enable_http3: true`，降低握手与队头阻塞延迟。
+  - 调整 `fallback` 的 `threshold`（CN: 250ms / 非CN: 350ms），更快完成主备切换。
